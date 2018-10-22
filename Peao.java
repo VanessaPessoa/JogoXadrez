@@ -21,10 +21,8 @@ public class Peao extends Peca
       
     }       
     
-    public void mover(Casa destino){
-        
-        //movimentação dos peaos 
-               
+    public void mover(Casa destino){        
+        //movimentação dos peaos               
         if(podeMover(destino)==true){
                  destino.colocarPeca(this);
                  casa.removerPeca();
