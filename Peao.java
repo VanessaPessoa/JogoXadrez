@@ -52,7 +52,6 @@ public class Peao extends Peca
         }
         
         // condições de movimento do peão preto
-        //mesmas condições que o branco, so muda o tipo
         if(tipo==1  && destino.possuiPeca()==false && casa.getY()==6 && casa.getX() == destino.getX() && casa.getY()-2== destino.getY()){
             return true;
         }
