@@ -31,7 +31,6 @@ public class Peao extends Peca
                  casa=destino;
                  troca(destino);
             }
-        
     }
     
     public Boolean podeMover(Casa destino){
