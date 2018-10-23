@@ -18,5 +18,23 @@ public class Torre extends Peca
        tabuleiro = new Tabuleiro();
     }
     
+    public void mover(Casa destino){      
+        if(podeMover(destino)){
+            destino.colocarPeca(this);
+            casa.removerPeca();
+            casa=destino; 
+        }
+    }
     
+    public Boolean podeMover(Casa destino) {
+        int xOrigem = casa.getX();
+        int yOrigem = casa.getY();
+        int xDestino = destino.getX();
+        int yDestino = destino.getY();
+        
+        if ((xDestino == yOrigem && yDestino != yOrigem) || (xDestino != xOrigem && yDestino == yOrigem)) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -19,44 +19,35 @@ public class Jogo {
      * Utilizado na inicializa�ao do jogo.
      */
     protected void criarPecas() {
-      //posicionar os peões brancos
         for(int linha=0; linha<8; linha++){
-           Peca peaoBranco= new Peao(tabuleiro.getCasa(linha,1), Peca.PEAO_BRANCO);
-           
-        }
-        //posicionar os peões pretos
-        for(int linha=0; linha<8; linha++){
-           Peca peaoPreto= new Peao(tabuleiro.getCasa(linha,6), Peca.PEAO_PRETO);
-          
+           //posicionar os peões brancos
+           Peca peaoBranco = new Peao(tabuleiro.getCasa(linha,1), Peca.PEAO_BRANCO);
+           //posicionar os peões pretos
+           Peca peaoPreto = new Peao(tabuleiro.getCasa(linha,6), Peca.PEAO_PRETO);
         }
         
         //posicionar as torres brancas
-        Peca torreBranca= new Torre(tabuleiro.getCasa(0,0),Peca.TORRE_BRANCA);
-               
-        Peca torreBranca1= new Torre(tabuleiro.getCasa(7,0),Peca.TORRE_BRANCA);
+        Peca torreBranca = new Torre(tabuleiro.getCasa(0,0),Peca.TORRE_BRANCA);
+        Peca torreBranca1 = new Torre(tabuleiro.getCasa(7,0),Peca.TORRE_BRANCA);
                 
         //posicionar as torres pretas
         Peca torrePreta= new Torre(tabuleiro.getCasa(0,7),Peca.TORRE_PRETA);
-                
         Peca torrePreta1= new Torre(tabuleiro.getCasa(7,7),Peca.TORRE_PRETA);
+        
         //posicionar os bispos brancos
-        Peca bispoBranco= new Bispo(tabuleiro.getCasa(2,0),Peca.BISPO_BRANCO);
-                
+        Peca bispoBranco= new Bispo(tabuleiro.getCasa(2,0),Peca.BISPO_BRANCO);        
         Peca bispoBranco1= new Bispo(tabuleiro.getCasa(5,0),Peca.BISPO_BRANCO);
                 
         //posicionar os bispos pretos
         Peca bispoPreto= new Bispo(tabuleiro.getCasa(2,7),Peca.BISPO_PRETO);
-                
         Peca bispoPreto1= new Bispo(tabuleiro.getCasa(5,7),Peca.BISPO_PRETO);
         
-         //posicionar os cavalos brancos
+        //posicionar os cavalos brancos
         Peca cavaloBranco= new Cavalo(tabuleiro.getCasa(1,0),Peca.CAVALO_BRANCO);
-               
         Peca cavaloBranco1= new Cavalo(tabuleiro.getCasa(6,0),Peca.CAVALO_BRANCO);
                 
         //posicionar os cavalos pretos
         Peca cavaloPreto= new Cavalo(tabuleiro.getCasa(1,7),Peca.CAVALO_PRETO);
-               
         Peca cavaloPreto1= new Cavalo(tabuleiro.getCasa(6,7),Peca.CAVALO_PRETO);
         
         //posicionar a rainha branca
@@ -70,7 +61,6 @@ public class Jogo {
         
         //posicionar o rei preto
         Peca reiPreto= new Rei(tabuleiro.getCasa(4,7),Peca.REI_PRETO);
-        
     }    
     
     /**

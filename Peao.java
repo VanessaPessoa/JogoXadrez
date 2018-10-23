@@ -21,14 +21,13 @@ public class Peao extends Peca
       
     }       
     
-    public void mover(Casa destino){        
-        //movimentação dos peaos               
-        if(podeMover(destino)==true){
+    public void mover(Casa destino){
+        //movimentação dos cavalos brancos e pretos        
+        if(podeMover(destino)){
                  destino.colocarPeca(this);
                  casa.removerPeca();
-                 casa=destino;
-                 troca(destino);
-            }
+                 casa=destino; 
+        }
     }
     
     public Boolean podeMover(Casa destino){
@@ -49,6 +48,7 @@ public class Peao extends Peca
         }
         
         // condições de movimento do peão preto
+        //mesmas condições que o branco, so muda o tipo
         if(tipo==1  && destino.possuiPeca()==false && casa.getY()==6 && casa.getX() == destino.getX() && casa.getY()-2== destino.getY()){
             return true;
         }
@@ -144,10 +144,7 @@ public class Peao extends Peca
                }
             }while(x==JOptionPane.CLOSED_OPTION);  
          }    
-            
-        }
-    
-       
+    }
 }
         
        

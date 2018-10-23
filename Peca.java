@@ -31,12 +31,13 @@ public class Peca {
     protected int tipo;
     protected Tabuleiro tabuleiro;
     protected Boolean jogador;
+    
     public Peca(Casa casa, int tipo) {
         this.casa = casa;    
         this.tipo = tipo;
         casa.colocarPeca(this);
-        tabuleiro= new Tabuleiro();
-        jogador= true;
+        tabuleiro = new Tabuleiro();
+        jogador = true;
     }
     
     /**
@@ -44,10 +45,11 @@ public class Peca {
      * @param destino nova casa que ira conter esta peca.
      */
     public void mover(Casa destino) {
-        casa.removerPeca();
-        destino.colocarPeca(this);
-        casa = destino;
-            
+        if (podeMover(destino)) {
+            casa.removerPeca();
+            destino.colocarPeca(this);
+            casa = destino;
+        }
     }
     
     
@@ -69,18 +71,15 @@ public class Peca {
             return false;
         }
         else if(casa.getTipoPeca()%2!=0 && destino.getTipoPeca()%2!=0){
-            
             return false; 
         }
         
         return null;
-        
      }
        
     
     public Boolean podeMover(Casa destino){
         return null;
-        
     }
 
        

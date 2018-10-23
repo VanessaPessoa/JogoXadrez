@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Rei
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Rei\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=casa\ tipo
+comment1.target=Rei(Casa,\ int)
+comment2.params=destino
+comment2.target=void\ mover(Casa)
+comment3.params=destino
+comment3.target=java.lang.Boolean\ podeMover(Casa)
+numComments=4

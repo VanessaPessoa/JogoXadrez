@@ -17,7 +17,6 @@ public class Rei extends Peca
     }
       
     public void mover(Casa destino) {
-                
         //movimentação do rei branco e preto
         if(tipo==10 || tipo==11){
           if (destino.possuiPeca()==false ||  capturar(destino)==true){
