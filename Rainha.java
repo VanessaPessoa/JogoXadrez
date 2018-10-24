@@ -11,7 +11,7 @@ public class Rainha extends Peca
 
 {
     private Tabuleiro tabuleiro;
-    
+   
        /**
      * Constructor for objects of class Rainha
      */
@@ -19,14 +19,12 @@ public class Rainha extends Peca
     {
         super(casa, tipo);
          tabuleiro = new Tabuleiro();
-
-    }
+             }
     
     public void mover(Casa destino){
 
         if (podeMover(destino)){
             destino.colocarPeca(this);
-
             casa.removerPeca();
             destino.colocarPeca(this);
             casa = destino;
@@ -99,7 +97,23 @@ public class Rainha extends Peca
        int yDestino = destino.getY();
        //verifica se esta andando na horizontal e vertical
        //ou se o movimento é na diagonal
+       int x = xDestino - xOrigem;
+       int moduloX = modulo(x);
+       int y = yDestino - yOrigem;
+       int moduloY = modulo(y);
        
+       if((moduloX == moduloY) || ((xOrigem == xDestino && yOrigem != yDestino)|| (xOrigem != xDestino && yOrigem == yDestino))){
+           if((destino.possuiPeca() == false) || (capturar(destino) == true)){
+               return true;
+           }
+       }
        return false;
+    }
+    
+    public int modulo(int i){
+        if(i <0){
+            return -i;
+        }
+        return i;
     }
 }

@@ -5,7 +5,7 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Torre extends Rainha
+public class Torre extends Peca
 {
     private Tabuleiro tabuleiro;
     private boolean primeiraJogada;
@@ -51,12 +51,18 @@ public class Torre extends Rainha
         //verifica se esta andando na horizontal e vertical
         // verifica se possui peça entre a casa de origem e a casa de destino
         if(tipo == 2 || tipo == 3){
-            if((xOrigem != xDestino && yOrigem == yDestino) || (yOrigem != yDestino && xOrigem == xDestino)){
-                if(destino.possuiPeca() == false || capturar(destino) == true){                                     
+            if((xOrigem == xDestino && yOrigem != yDestino)|| (xOrigem != xDestino && yOrigem == yDestino)){
+                if((destino.possuiPeca() == false) || (capturar(destino) == true)){
+                   if(xOrigem > xDestino){
+                       for(int linha = xOrigem; linha> xDestino; linha ++){
+                           if (tabuleiro.getCasa(linha, yDestino).possuiPeca()==false){
+                               return true;
+                           }
+                       }
+                   }
                     return true;
-                }
-            }       
-                    
+               }
+            }                    
         }
         return false;
     }

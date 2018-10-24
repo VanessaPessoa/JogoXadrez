@@ -53,9 +53,14 @@ public class Bispo extends Peca
        int xDestino =  destino.getX();
        int yOrigem = casa.getY();
        int yDestino = destino.getY();
-       //verifica se o movimento
+       // calcula o modulo da direção de x e y
+       int x = xDestino - xOrigem;
+       int moduloX = modulo(x);
+       int y = yDestino - yOrigem;
+       int moduloY = modulo(y);
+       // se o modulo da direção de x for igual o modulo da direção de y entao o movimento é valido
        if(tipo == 6 || tipo == 7){    
-           if((xOrigem != xDestino) && (yOrigem != yDestino)){
+           if(moduloX == moduloY){
                if((destino.possuiPeca() == false) || (capturar(destino) == true)){
                    return true;
                }
@@ -64,6 +69,13 @@ public class Bispo extends Peca
        return false;
     
    }
+   
+   public int modulo(int i){
+        if(i <0){
+            return -i;
+        }
+        return i;
+    }
 
 }
     
