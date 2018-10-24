@@ -7,5 +7,6 @@ comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Torre\r\n
 comment2.params=destino
 comment2.target=void\ mover(Casa)
 comment3.params=destino
-comment3.target=java.lang.Boolean\ podeMover(Casa)
+comment3.target=boolean\ podeMover(Casa)
+comment3.text=\r\n\ \ \ \ public\ boolean\ podeMover(Casa\ destino)\ {\r\n\ \ \ \ \ \ \ \ int\ xOrigem\ \=\ casa.getX();\r\n\ \ \ \ \ \ \ \ int\ yOrigem\ \=\ casa.getY();\r\n\ \ \ \ \ \ \ \ int\ xDestino\ \=\ destino.getX();\r\n\ \ \ \ \ \ \ \ int\ yDestino\ \=\ destino.getY();\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ \ \ \ \ if\ ((xDestino\ \=\=\ yOrigem\ &&\ yDestino\ \!\=\ yOrigem)\ ||\ (xDestino\ \!\=\ xOrigem\ &&\ yDestino\ \=\=\ yOrigem))\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ return\ false;\r\n\ \ \ \ }\r\n
 numComments=4

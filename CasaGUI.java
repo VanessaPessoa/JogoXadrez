@@ -130,7 +130,7 @@ public class CasaGUI extends JButton {
         return getIcon() != null;
     }
     
-    public int getCorPeca() {
+    public int getTipoPeca() {
         Icon icone = getIcon();
         
         if (icone == PEAO_BRANCO || icone == TORRE_BRANCA || icone == CAVALO_BRANCO ||  icone == BISPO_BRANCO ||  icone == RAINHA_BRANCA

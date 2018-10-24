@@ -27,9 +27,14 @@ public class JanelaPrincipal extends JFrame {
     public void reagir(CasaGUI casaClicada) {
         if (primeiroClique) {
             if (casaClicada.possuiPeca()) {
-                casaClicadaOrigem = casaClicada;
-                casaClicadaOrigem.destacar();
-                primeiroClique = false;
+                if(jogo.suaVez(casaClicada.getTipoPeca())) {
+                    casaClicadaOrigem = casaClicada;
+                    casaClicadaOrigem.destacar();
+                    primeiroClique = false;
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, (jogo.turno() == 0 ? "Vez das peças brancas." : "Vez das peças pretas."));
+                }
             }
             else {
                 // clicou em uma posi�?o inv�lida, ent?o n?o faz nada.
@@ -38,13 +43,20 @@ public class JanelaPrincipal extends JFrame {
             
         }
         else { 
-                casaClicadaDestino = casaClicada;
-                jogo.moverPeca(casaClicadaOrigem.getPosicaoX(), casaClicadaOrigem.getPosicaoY(),
-                        casaClicadaDestino.getPosicaoX(), casaClicadaDestino.getPosicaoY());
-                casaClicadaOrigem.atenuar();
-                primeiroClique = true;
-                atualizar();             
-             }
+                if (casaClicada == casaClicadaOrigem) {
+                    casaClicadaOrigem.atenuar();
+                    primeiroClique = true;
+                }
+                else {
+                    casaClicadaDestino = casaClicada;
+                    jogo.moverPeca(casaClicadaOrigem.getPosicaoX(), casaClicadaOrigem.getPosicaoY(),
+                            casaClicadaDestino.getPosicaoX(), casaClicadaDestino.getPosicaoY());
+                    casaClicadaOrigem.atenuar();
+                    jogo.mudarTurno();
+                    primeiroClique = true;
+                    atualizar();             
+                }
+        }
     }    
     
     /**
@@ -56,7 +68,7 @@ public class JanelaPrincipal extends JFrame {
         this.primeiroClique = true;
         this.casaClicadaOrigem = null;
         this.casaClicadaDestino = null;
-                criarNovoJogo();
+        criarNovoJogo();
 
         // configura action listener para o menu novo
         menuNovo.addActionListener(new ActionListener() {
@@ -83,6 +95,7 @@ public class JanelaPrincipal extends JFrame {
      */
     private void criarNovoJogo() {
         jogo = new Jogo();
+        jogo.vezInicial();
         atualizar();
     }
 

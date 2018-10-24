@@ -8,10 +8,33 @@
 public class Jogo {
 
     private Tabuleiro tabuleiro;
+    private int turno; // 0 representa brancas e 1 representa pretas
 
     public Jogo() {
         tabuleiro = new Tabuleiro();
+        turno = 0;
         criarPecas();
+    }
+    
+    public int turno() {
+        return turno;
+    }
+    
+    public boolean suaVez(int tipoPeca) {
+        return tipoPeca == turno;
+    }
+    
+    public void mudarTurno() {
+        if (turno == 0) { // brancas
+            turno++;
+        }
+        else { // pretas
+            turno--;
+        }
+    }
+    
+    public void vezInicial() {
+        turno = 0; // brancas
     }
     
     /**
@@ -74,7 +97,7 @@ public class Jogo {
      */
     public void moverPeca(int origemX, int origemY, int destinoX, int destinoY) {
         //onde ocorrera as movimentações das peças
-        Casa origem= tabuleiro.getCasa(origemX, origemY);
+        Casa origem = tabuleiro.getCasa(origemX, origemY);
         Casa destino = tabuleiro.getCasa(destinoX, destinoY);
         Peca peca= origem.getPeca();
         peca.mover(destino);

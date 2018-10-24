@@ -6,5 +6,5 @@ comment1.target=Rei(Casa,\ int)
 comment2.params=destino
 comment2.target=void\ mover(Casa)
 comment3.params=destino
-comment3.target=java.lang.Boolean\ podeMover(Casa)
+comment3.target=boolean\ podeMover(Casa)
 numComments=4

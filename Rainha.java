@@ -4,30 +4,37 @@
  *
  * @author (your name)
  * @version (a version number or a date)
+ * 
  */
+
 public class Rainha extends Peca
 
 {
     private Tabuleiro tabuleiro;
     
-        /**
+       /**
      * Constructor for objects of class Rainha
      */
     public Rainha(Casa casa, int tipo)
     {
         super(casa, tipo);
          tabuleiro = new Tabuleiro();
+
     }
     
     public void mover(Casa destino){
-        if(podeMover(destino)){
+
+        if (podeMover(destino)){
             destino.colocarPeca(this);
+
             casa.removerPeca();
-            casa=destino; 
+            destino.colocarPeca(this);
+            casa = destino;
         }
+         
     }
-    
-    public Boolean podeMover(Casa destino) {
+     /*
+    public boolean podeMover(Casa destino){
         int xOrigem = casa.getX();
         int yOrigem = casa.getY();
         int xDestino = destino.getX();
@@ -41,11 +48,13 @@ public class Rainha extends Peca
                 xOrigem = xDestino;
                 xDestino = valorMaior;
             }
+            
             if (yOrigem > yDestino) {
                 int valorMaior = yOrigem;
                 yOrigem = yDestino;
                 yDestino = valorMaior;
             }
+            // movimento horizontal 
             if (xDestino == xOrigem){
                 // determina yOrigem como menor valor e yDestino com o maior valor
                 // ajuda a percorrer o for do menor para o maior
@@ -57,6 +66,7 @@ public class Rainha extends Peca
                     }
                 }
             }
+            // movimento vertical
             else if (yDestino == yOrigem) {
                 // vasculhar as casas até o xDestino verificando se tem peca adversaria, se tiver, nao pode mover
                 for (int i = xOrigem; i < xDestino; i++) {
@@ -65,6 +75,7 @@ public class Rainha extends Peca
                     }
                 }
             }
+            // movimento diagonal
             else {                
                 for (int i = xOrigem; i < xDestino; i++) {
                     for (int j = yOrigem; j < yDestino; j++) {
@@ -75,7 +86,20 @@ public class Rainha extends Peca
                     }
                 }
             }
+            return false;
         }
         return true;
+    }
+     */
+   
+    public boolean podeMover(Casa destino){
+       int xOrigem = casa.getX();
+       int yOrigem = casa.getY();
+       int xDestino = destino.getY();
+       int yDestino = destino.getY();
+       //verifica se esta andando na horizontal e vertical
+       //ou se o movimento é na diagonal
+       
+       return false;
     }
 }
