@@ -20,7 +20,7 @@ public class CasaGUI extends JButton {
     public static final Color COR_CLARA = new Color(233,194,166);
     public static final Color COR_ESCURA = new Color(255,0,255);
     private static final Color COR_DESTAQUE = new Color(0, 1, 0, 0.4f);
-    
+   
     // Icones das pecas
     private static final Icon PEAO_BRANCO = new ImageIcon("pecas/PecasXadrez/pawn_white.png");
     private static final Icon TORRE_BRANCA= new ImageIcon("pecas/PecasXadrez/tower_white.png");
@@ -147,7 +147,6 @@ public class CasaGUI extends JButton {
     }
     
     public void destacar() {
-        
             setBackground(COR_DESTAQUE);
     }
 

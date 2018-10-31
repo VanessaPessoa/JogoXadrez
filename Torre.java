@@ -1,69 +1,113 @@
-
+import java.util.ArrayList;
 /**
  * Write a description of class Torre here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Torre extends Peca
-{
-    private Tabuleiro tabuleiro;
-    private boolean primeiraJogada;
-
+public class Torre extends Peca{
+    private boolean primeiraJogadaTorre;
+    
     /**
      * Constructor for objects of class Torre
      */
-    public Torre(Casa casa, int tipo)
+    public Torre(Casa casa, int tipo, Tabuleiro tabuleiro)
     {
-       super(casa, tipo); 
-       tabuleiro = new Tabuleiro();
-
-       
+       super(casa, tipo, tabuleiro);
+       primeiraJogadaTorre = true;
     }
-    
-    public void mover(Casa destino){      
-        if(podeMover(destino)) {
-            casa.removerPeca();
-            destino.colocarPeca(this);
-            casa = destino;
-            
+        
+    public void movimentos(int x, int y) {
+        // vasculhar as casas a esquerda
+        for (int i = x-1; i >= 0; i--) {
+            if (tabuleiro.getCasa(i, y) != null) {
+                if (tabuleiro.getCasa(i, y).possuiPeca() && capturar(tabuleiro.getCasa(i, y))) {
+                    casas.add(tabuleiro.getCasa(i, y));  
+                    break;
+                }
+                else if (tabuleiro.getCasa(i, y).possuiPeca() && capturar(tabuleiro.getCasa(i, y)) == false){
+                    break;
+                }
+                casas.add(tabuleiro.getCasa(i, y));
+            }
+        }
+        // vasculhar as casas a direita
+        for (int i = x+1; i < 8; i++) {
+            if(tabuleiro.getCasa(i, y) != null) {
+                if (tabuleiro.getCasa(i, y).possuiPeca() && capturar(tabuleiro.getCasa(i, y))) {
+                    casas.add(tabuleiro.getCasa(i, y));  
+                    break;
+                }
+                else if (tabuleiro.getCasa(i, y).possuiPeca() && capturar(tabuleiro.getCasa(i, y)) == false){
+                    break;
+                }
+                casas.add(tabuleiro.getCasa(i, y));
+            }
+        }
+        // vasculhar as casas acima 
+        for (int i = y-1; i >= 0; i--) {
+            if (tabuleiro.getCasa(x, i) != null) {
+                if  (tabuleiro.getCasa(x, i).possuiPeca() && capturar(tabuleiro.getCasa(x, i))) {
+                    casas.add(tabuleiro.getCasa(x, i));  
+                    break;
+                }
+                else if (tabuleiro.getCasa(x, i).possuiPeca() && capturar(tabuleiro.getCasa(x, i)) == false){
+                    break;
+                }
+                casas.add(tabuleiro.getCasa(x, i));  
+            }
+        }
+        // vasculhar as casas abaixo
+        for (int i = y+1; i < 8; i++) {
+            if (tabuleiro.getCasa(x, i) != null) {
+                if (tabuleiro.getCasa(x, i).possuiPeca() && capturar(tabuleiro.getCasa(x, i))) {
+                    casas.add(tabuleiro.getCasa(x, i));  
+                    break;
+                }
+                else if (tabuleiro.getCasa(x, i).possuiPeca() && capturar(tabuleiro.getCasa(x, i)) == false){
+                    break;
+                }
+                casas.add(tabuleiro.getCasa(x, i));
+            }
         }
     }
+    
     /*
-    public boolean podeMover(Casa destino) {
-        int xOrigem = casa.getX();
-        int yOrigem = casa.getY();
-        int xDestino = destino.getX();
-        int yDestino = destino.getY();
-        
-        if ((xDestino == yOrigem && yDestino != yOrigem) || (xDestino != xOrigem && yDestino == yOrigem)) {
+    public boolean roque(Casa destino){
+        if(tipoRoque == 1){
+            destino = tabuleiro.getCasa(5,0);
+            return true;
+        }
+        else if(tipoRoque == 2){
+            destino = tabuleiro.getCasa(5,7);
+            return true;
+        }
+        else if(tipoRoque == 3){
+            destino = tabuleiro.getCasa(3,0);
+            return true;
+        }
+        else if(tipoRoque == 4){
+            destino = tabuleiro.getCasa(3,7);
             return true;
         }
         return false;
-    }
+    }    
+    
     */
    
-    public boolean podeMover(Casa destino){
-        int xOrigem = casa.getX();
-        int yOrigem = casa.getY();
-        int xDestino = destino.getX();
-        int yDestino = destino.getY();
-        //verifica se esta andando na horizontal e vertical
-        // verifica se possui peça entre a casa de origem e a casa de destino
-        if(tipo == 2 || tipo == 3){
-            if((xOrigem == xDestino && yOrigem != yDestino)|| (xOrigem != xDestino && yOrigem == yDestino)){
-                if((destino.possuiPeca() == false) || (capturar(destino) == true)){
-                   if(xOrigem > xDestino){
-                       for(int linha = xOrigem; linha> xDestino; linha ++){
-                           if (tabuleiro.getCasa(linha, yDestino).possuiPeca()==false){
-                               return true;
-                           }
-                       }
-                   }
-                    return true;
-               }
-            }                    
+    public void mover(Casa destino){      
+        if (podeMover(destino)) {
+            primeiraJogadaTorre = false;
         }
-        return false;
+        if(roque(destino) == true){
+            roque(destino);
+            casa = destino;
+        }
+        super.mover(destino);
+        super.mover(destino);
     }
+    
+    public boolean primeiraJogadaTorre(){
+       return primeiraJogadaTorre;
+    }      
 }

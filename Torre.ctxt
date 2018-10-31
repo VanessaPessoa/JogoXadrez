@@ -1,12 +1,14 @@
 #BlueJ class context
 comment0.target=Torre
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Torre\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=casa\ tipo
-comment1.target=Torre(Casa,\ int)
+comment1.params=casa\ tipo\ tabuleiro
+comment1.target=Torre(Casa,\ int,\ Tabuleiro)
 comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Torre\r\n
-comment2.params=destino
-comment2.target=void\ mover(Casa)
+comment2.params=x\ y
+comment2.target=void\ movimentos(int,\ int)
 comment3.params=destino
-comment3.target=boolean\ podeMover(Casa)
-comment3.text=\r\n\ \ \ \ public\ boolean\ podeMover(Casa\ destino)\ {\r\n\ \ \ \ \ \ \ \ int\ xOrigem\ \=\ casa.getX();\r\n\ \ \ \ \ \ \ \ int\ yOrigem\ \=\ casa.getY();\r\n\ \ \ \ \ \ \ \ int\ xDestino\ \=\ destino.getX();\r\n\ \ \ \ \ \ \ \ int\ yDestino\ \=\ destino.getY();\r\n\ \ \ \ \ \ \ \ \r\n\ \ \ \ \ \ \ \ if\ ((xDestino\ \=\=\ yOrigem\ &&\ yDestino\ \!\=\ yOrigem)\ ||\ (xDestino\ \!\=\ xOrigem\ &&\ yDestino\ \=\=\ yOrigem))\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ return\ false;\r\n\ \ \ \ }\r\n
-numComments=4
+comment3.target=void\ mover(Casa)
+comment3.text=\r\n\ \ \ \ public\ boolean\ roque(Casa\ destino){\r\n\ \ \ \ \ \ \ \ if(tipoRoque\ \=\=\ 1){\r\n\ \ \ \ \ \ \ \ \ \ \ \ destino\ \=\ tabuleiro.getCasa(5,0);\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ else\ if(tipoRoque\ \=\=\ 2){\r\n\ \ \ \ \ \ \ \ \ \ \ \ destino\ \=\ tabuleiro.getCasa(5,7);\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ else\ if(tipoRoque\ \=\=\ 3){\r\n\ \ \ \ \ \ \ \ \ \ \ \ destino\ \=\ tabuleiro.getCasa(3,0);\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ else\ if(tipoRoque\ \=\=\ 4){\r\n\ \ \ \ \ \ \ \ \ \ \ \ destino\ \=\ tabuleiro.getCasa(3,7);\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ return\ false;\r\n\ \ \ \ }\ \ \ \ \r\n\ \ \ \ \r\n
+comment4.params=
+comment4.target=boolean\ primeiraJogadaTorre()
+numComments=5

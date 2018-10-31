@@ -1,4 +1,6 @@
-
+import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.util.ArrayList;
 /**
  * Write a description of class Bispo here.
  *
@@ -7,76 +9,243 @@
  */
 public class Bispo extends Peca
 {
-    private Tabuleiro tabuleiro;
     
     /**
      * Constructor for objects of class Bispo
      */
-    public Bispo(Casa casa, int tipo)
+    public Bispo(Casa casa, int tipo, Tabuleiro tabuleiro)
     {
-        super(casa, tipo);
-         tabuleiro = new Tabuleiro();
+        super(casa, tipo, tabuleiro);
+    }
+    
+    public void movimentos(int x, int y) {
+        int i = x;
+        int j = y;
+        // pega a diagonal direita-acima
+        while(i < 8 && j < 8) {
+            ++i;
+            ++j;
+            if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && capturar(tabuleiro.getCasa(i, j))) {
+                // se a casa conter peça adversaria, ela tambem é adicionada ao ArrayList
+                if (tabuleiro.getCasa(i, j).getTipoPeca()%2 != tipo%2){
+                    casas.add(tabuleiro.getCasa(i, j));
+                }
+                break;
+            }
+            else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() == false) {
+                casas.add(tabuleiro.getCasa(i, j));                  
+            }
+            else {
+                break;
+            }
+        }
+        // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+        i = x;
+        j = y;
+        // pega a diagonal esquerda-acima 
+        while(i >= 0 && j < 8) {
+            --i;
+            ++j;
+            if(tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() &&  capturar(tabuleiro.getCasa(i, j))) {
+                // se a casa conter peça adversaria, ela tambem é adicionada ao ArrayList
+                if (tabuleiro.getCasa(i, j).getTipoPeca()%2 != tipo%2){
+                    casas.add(tabuleiro.getCasa(i, j));
+                }
+                break;
+            }
+            else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() == false) {
+                casas.add(tabuleiro.getCasa(i, j));                  
+            }
+            else {
+                break;
+            }
+        }
+        // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+        i = x;
+        j = y;
+        // pega a diagonal direita-abaixo
+        while(i < 8 && j >= 0) {
+            ++i;
+            --j;
+            if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && capturar(tabuleiro.getCasa(i, j))) {
+                // se a casa conter peça adversaria, ela tambem é adicionada ao ArrayList
+                if (tabuleiro.getCasa(i, j).getTipoPeca()%2 != tipo%2){
+                    casas.add(tabuleiro.getCasa(i, j));
+                }
+                break;
+            }
+            else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() == false) {
+                casas.add(tabuleiro.getCasa(i, j));                  
+            }            
+            else {
+                break;
+            }
+        }
+        // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+        i = x;
+        j = y;
+        // pega a diagonal esquerda-abaixo
+        while(i >= 0 && j >= 0) {
+            --i;
+            --j;
+            if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() &&  capturar(tabuleiro.getCasa(i, j))) {
+                // se a casa conter peça adversaria, ela tambem é adicionada ao ArrayList
+                if (tabuleiro.getCasa(i, j).getTipoPeca()%2 != tipo%2){
+                    casas.add(tabuleiro.getCasa(i, j));
+                } 
+                break;
+            }
+            else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() == false) {
+                casas.add(tabuleiro.getCasa(i, j));                  
+            }
+            else {
+                break;
+            }
+        }
+    }
+    
+    public void proximoMovimento(){
+        ////verificar em cada proxima possivel jogada  o rei adversario
+        int x = casa.getX();
+        int y = casa.getY();
+        int i = x;
+        int j = y;
+        
+        if(tipo == 6){
+            // pega a diagonal direita-acima
+            while(i < 8 && j < 8) {
+                ++i;
+                ++j;
+                if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() != 11) {
+                    // nada acontece                    
+                    break;
+                }
+                else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() == 11) {
+                    JOptionPane.showMessageDialog(null, " Xeque");
+                    break;
+                }
+            }
+            // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+            i = x;
+            j = y;
+            // pega a diagonal esquerda-acima 
+            while(i >= 0 && j < 8) {
+                --i;
+                ++j;
+                if(tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() &&  (tabuleiro.getCasa(i, j)).getTipoPeca() != 11) {
+                    // nada acontece                                        
+                    break;
+                }
+                else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() == 11) {
+                    JOptionPane.showMessageDialog(null, " Xeque");
+                    break;
+                }
+            }
+            // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+            i = x;
+            j = y;
+            // pega a diagonal direita-abaixo
+            while(i < 8 && j >= 0) {
+                ++i;
+                --j;
+                if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() != 11) {
+                    // nada acontece                                        
+                    break;
+                }
+                else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() == 11) {
+                    JOptionPane.showMessageDialog(null, " Xeque");
+                    break;
+                }
+            }
+            // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+            i = x;
+            j = y;
+            // pega a diagonal esquerda-abaixo
+            while(i >= 0 && j >= 0) {
+                --i;
+                --j;
+                if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() != 11) {
+                    // nada acontece                    
+                     break;
+                }
+                else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() == 11) {
+                    JOptionPane.showMessageDialog(null, " Xeque");
+                     break;
+                }
+            }
+        
+        }
+        if(tipo == 7){
+            // pega a diagonal direita-acima
+            while(i < 8 && j < 8) {
+                ++i;
+                ++j;
+                if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() != 10) {
+                    // nada acontece                    
+                    break;
+                }
+                else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() == 10) {
+                    JOptionPane.showMessageDialog(null, " Xeque");
+                    break;
+                }
+            }
+            // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+            i = x;
+            j = y;
+            // pega a diagonal esquerda-acima 
+            while(i >= 0 && j < 8) {
+                --i;
+                ++j;
+                if(tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() &&  (tabuleiro.getCasa(i, j)).getTipoPeca() != 10) {
+                    // nada acontece                                        
+                    break;
+                }
+                else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() == 10) {
+                    JOptionPane.showMessageDialog(null, " Xeque");
+                    break;
+                }
+            }
+            // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+            i = x;
+            j = y;
+            // pega a diagonal direita-abaixo
+            while(i < 8 && j >= 0) {
+                ++i;
+                --j;
+                if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() != 10) {
+                    // nada acontece                                        
+                    break;
+                }
+                else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() == 10) {
+                    JOptionPane.showMessageDialog(null, " Xeque");
+                    break;
+                }
+            }
+            // reseta os valores das coordenadas de verificação para os valores das coordenadas da origem 
+            i = x;
+            j = y;
+            // pega a diagonal esquerda-abaixo
+            while(i >= 0 && j >= 0) {
+                --i;
+                --j;
+                if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() != 10) {
+                    // nada acontece                    
+                     break;
+                }
+                else if (tabuleiro.getCasa(i, j) != null && tabuleiro.getCasa(i, j).possuiPeca() && (tabuleiro.getCasa(i, j)).getTipoPeca() == 10) {
+                    JOptionPane.showMessageDialog(null, " Xeque");
+                     break;
+                }
+            }
+        
+        }
     }
     
     public void mover(Casa destino) {
-        if (podeMover(destino)) {
-            casa.removerPeca();
-            destino.colocarPeca(this);
-            casa = destino;
-        }
+        super.mover(destino);
     }
-   
-    /*
-    public boolean podeMover(Casa destino) {
-        int xOrigem = casa.getX();
-        int yOrigem = casa.getY();
-        int xDestino = destino.getX();
-        int yDestino = destino.getY();
-        
-        if (xDestino != xOrigem && yDestino != yOrigem) {
-            for (int i = xOrigem; i < xDestino; i++) {
-                for (int j = yOrigem; j < yDestino; j++) {
-                    if ((tabuleiro.getCasa(i, yOrigem).possuiPeca() && tabuleiro.getCasa(i, yOrigem).getTipoPeca()%2 != casa.getTipoPeca()%2)
-                        && (tabuleiro.getCasa(xOrigem, j).possuiPeca() && tabuleiro.getCasa(xOrigem, j).getTipoPeca()%2 != casa.getTipoPeca()%2)) {
-                            return false;
-                    }
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-    */
-   
-   public boolean podeMover(Casa destino){
-       int xOrigem = casa.getX();
-       int xDestino =  destino.getX();
-       int yOrigem = casa.getY();
-       int yDestino = destino.getY();
-       // calcula o modulo da direção de x e y
-       int x = xDestino - xOrigem;
-       int moduloX = modulo(x);
-       int y = yDestino - yOrigem;
-       int moduloY = modulo(y);
-       // se o modulo da direção de x for igual o modulo da direção de y entao o movimento é valido
-       if(tipo == 6 || tipo == 7){    
-           if(moduloX == moduloY){
-               if((destino.possuiPeca() == false) || (capturar(destino) == true)){
-                   return true;
-               }
-            }
-        }
-       return false;
-    
-   }
-   
-   public int modulo(int i){
-        if(i <0){
-            return -i;
-        }
-        return i;
-    }
-
 }
+
+
     
 

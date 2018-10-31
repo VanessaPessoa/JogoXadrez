@@ -27,6 +27,22 @@ public class TabuleiroGUI extends JPanel {
     }
 
     /**
+     * @param x linha
+     * @param y coluna
+     * @return Casa na posicao (x,y)
+     */
+    public CasaGUI getCasaGUI(int x, int y) {
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
+                if(x == casas[i][j].getX() && y == casas[i][j].getY()) {
+                    return casas[x][y];
+                }
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Preenche o tabuleiro com 64 casas
      */
     private void criarCasas() {

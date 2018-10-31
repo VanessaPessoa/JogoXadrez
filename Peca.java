@@ -3,6 +3,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 /**
  * Representa uma Pe�a do jogo.
  * Possui uma casa e um tipo associado.
@@ -10,7 +12,7 @@ import javax.swing.*;
  * @author Alan Moraes &lt;alan@ci.ufpb.br&gt;
  * @author Leonardo Villeth &lt;lvilleth@cc.ci.ufpb.br&gt;
  */
-public class Peca {
+public class Peca extends Movimentacao{
     //peças brancas serao pares
     //peças pretas serao impares
     public static final int PEAO_BRANCO = 0;
@@ -30,14 +32,23 @@ public class Peca {
     protected Casa casa;
     protected int tipo;
     protected Tabuleiro tabuleiro;
-    protected boolean jogador;
+    protected ArrayList<Casa> casas;
+    protected boolean moveuDuasCasas;   
     
-    public Peca(Casa casa, int tipo) {
+    public Peca(Casa casa, int tipo, Tabuleiro tabuleiro) {
         this.casa = casa;    
         this.tipo = tipo;
         casa.colocarPeca(this);
-        tabuleiro = new Tabuleiro();
-        jogador = true;
+        this.tabuleiro = tabuleiro;
+        moveuDuasCasas = false;
+        casas = new ArrayList<Casa>();
+    }
+    
+    public void movimentos(int x, int y) {
+    }
+    
+    public ArrayList<Casa> getCasasPossiveis() {
+        return casas;
     }
     
     /**
@@ -45,15 +56,23 @@ public class Peca {
      * @param destino nova casa que ira conter esta peca.
      */
     public void mover(Casa destino) {
-        if (podeMover(destino)) {
+        if (tipo %2 == 0 && podeMover(destino)) {
             casa.removerPeca();
             destino.colocarPeca(this);
-            casa = destino;
+            casa = destino; 
+            
         }
+        if (tipo %2 != 0 && podeMover(destino) ) {
+            casa.removerPeca();
+            destino.colocarPeca(this);
+            casa = destino; 
+            
+        }
+        proximoMovimento();
+        casas.clear();
     }
-    
-    
-    public Boolean capturar(Casa destino){
+   
+    public boolean capturar(Casa destino){
         //nao pode matar o rei
         if ((casa.getTipoPeca()%2 != 0 && destino.getTipoPeca() == 10) || (casa.getTipoPeca()%2 == 0 && destino.getTipoPeca() == 11)){
             JOptionPane.showMessageDialog(null, " Xeque");
@@ -61,27 +80,257 @@ public class Peca {
         }
         
         //verifica os tipos das peças
-        if(casa.getTipoPeca()%2 == 0 && destino.getTipoPeca()%2 != 0){
+        if (casa.getTipoPeca()%2 != destino.getTipoPeca()%2) {
             return true;
         }
-        else if(casa.getTipoPeca()%2 != 0 && destino.getTipoPeca()%2 == 0){
-            return true;
-        }
-        else if(casa.getTipoPeca()%2 == 0 && destino.getTipoPeca()%2 == 0){
-            return false;
-        }
-        else if(casa.getTipoPeca()%2 != 0 && destino.getTipoPeca()%2 != 0){
-            return false; 
-        }
-
-        return null;
-     }
-    
-    public boolean podeMover(Casa destino){
         return false;
-
+     }        
+      
+    public boolean podeMover(Casa destino){
+        int xOrigem = casa.getX();
+        int yOrigem = casa.getY();
+        casas.clear();
+        movimentos(xOrigem, yOrigem);
+        Iterator it = casas.iterator();
+        while(it.hasNext()) {
+            if (it.next().equals(destino)) {
+                return true;
+            }
+        }
+        return false;
     }
-       
+   
+    public int getDistancia(int i){
+        if(i < 0){
+            return -i;
+        }
+        return i;
+    }    
+    
+    public void proximoMovimento(){
+        ////verificar em cada proxima possivel jogada  o rei adversario
+    }
+    
+    public boolean proximaJogada(){
+        //na proxima jogada o rei nao pode ficar ameaçado
+        return false;
+    }
+    
+    public boolean xequeBranco(){
+        // verificar se o rei branco esta ameaçado
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                //verificar a posição do rei
+                if((tabuleiro.getCasa(i,j) != null) && (tabuleiro.getCasa(i,j).possuiPeca()) && (tabuleiro.getCasa(i,j).getTipoPeca() == 10)){
+                   // verificar se o rei esta ameaçado pelo peao adversario
+                   if((tabuleiro.getCasa(i+1,j+1) != null) && (tabuleiro.getCasa(i+1, j+1).possuiPeca()) 
+                   && (tabuleiro.getCasa(i+1, j+1).getTipoPeca() == 1)){
+                       return true;
+                   }
+                   if((tabuleiro.getCasa(i-1,j+1) != null) && (tabuleiro.getCasa(i-1, j+1).possuiPeca()) 
+                   && (tabuleiro.getCasa(i-1, j+1).getTipoPeca() == 1)){
+                       return true;
+                   }
+                   
+                   //verificar se o rei esta sendo ameaçado pelo rei adversario
+                   if(tabuleiro.getCasa(i+1, j) != null && (tabuleiro.getCasa(i+1, j).possuiPeca()) && 
+                   (tabuleiro.getCasa(i+1, j)).getTipoPeca() == 11) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i-1, j) != null && (tabuleiro.getCasa(i-1, j).possuiPeca()) && 
+                   (tabuleiro.getCasa(i-1, j)).getTipoPeca() == 11) {
+                        return true;
+                    }
+                   if(tabuleiro.getCasa(i, j+1) != null && (tabuleiro.getCasa(i, j+1).possuiPeca()) && 
+                    (tabuleiro.getCasa(i, j+1)).getTipoPeca() == 11) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i, j-1) != null && (tabuleiro.getCasa(i, j-1).possuiPeca()) &&
+                    (tabuleiro.getCasa(i, j-1)).getTipoPeca() == 11) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i+1, i+1) != null && (tabuleiro.getCasa(j+1, i+1).possuiPeca()) &&
+                    (tabuleiro.getCasa(j+1, i+1)).getTipoPeca() == 11) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i+1, j-1) != null && (tabuleiro.getCasa(i+1, j-1).possuiPeca()) && 
+                    (tabuleiro.getCasa(i+1, j-1)).getTipoPeca() == 11) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i-1, j+1) != null && (tabuleiro.getCasa(i-1, j+1).possuiPeca()) &&
+                   (tabuleiro.getCasa(i-1, j+1)).getTipoPeca() == 11) {
+                        return true;
+                   }        
+                   if(tabuleiro.getCasa(i-1, j-1) != null && (tabuleiro.getCasa(i-1, j-1).possuiPeca()) &&  
+                   (tabuleiro.getCasa(i-1, j-1)).getTipoPeca() == 11) {
+                        return true;
+                   }
+                                      
+                   //verificar se o rei esta sendo ameaçado pelo cavalo do adversario
+                   if (tabuleiro.getCasa(i+2, j+1) != null && (tabuleiro.getCasa(i+2, j+1).possuiPeca()) &&
+                      (tabuleiro.getCasa(i+2, j+1)).getTipoPeca() == 5) {
+                        return true;
+                    }
+                   if (tabuleiro.getCasa(i+2, j-1) != null && (tabuleiro.getCasa(i+2, j-1).possuiPeca()) && 
+                      (tabuleiro.getCasa(i+2, j-1)).getTipoPeca() == 5) {
+                        return true;
+                   }
+                   if (tabuleiro.getCasa(i-2, j+1) != null && (tabuleiro.getCasa(i-2, j+1).possuiPeca()) && 
+                      (tabuleiro.getCasa(i-2, j+1)).getTipoPeca() == 5) {
+                       return true;
+                   }
+                   if (tabuleiro.getCasa(i-2, j-1) != null && (tabuleiro.getCasa(i-2, j-1).possuiPeca()) && 
+                      (tabuleiro.getCasa(i-2, j-1)).getTipoPeca() == 5) {
+                        return true;
+                   }
+                   if (tabuleiro.getCasa(i+1, j+2) != null && (tabuleiro.getCasa(i+1, j+2).possuiPeca()) &&
+                       (tabuleiro.getCasa(i+1, j+2)).getTipoPeca() == 5) {
+                        return true;
+                    }
+                   if (tabuleiro.getCasa(i-1, j+2) != null && (tabuleiro.getCasa(i-1, j+2).possuiPeca()) &&
+                       (tabuleiro.getCasa(i-1, j+2)).getTipoPeca() == 5) {
+                        return true;
+                   }
+                   if (tabuleiro.getCasa(i+1, j-2) != null && (tabuleiro.getCasa(i+1, j-2).possuiPeca()) &&
+                      (tabuleiro.getCasa(i+1, j-2)).getTipoPeca() == 5) {
+                        return true;
+                   }
+                   if (tabuleiro.getCasa(i-1, j-2) != null && (tabuleiro.getCasa(i-1, j-2).possuiPeca()) &&
+                       (tabuleiro.getCasa(i-1, j-2)).getTipoPeca() == 5) {
+                        return true;
+                    
+                   }
+                   
+                   
+                   //verificar se o rei esta sendo ameaçado pela rainha adversaria                   
+                   
+                   
+                   break;
+                   
+                   
+                }
+                               
+                break;
+            }
+           
+        }
+        return false;
+    }
+    
+    public boolean xequePreto(){
+        // verificar se o rei branco esta ameaçado
+        for(int i = 0; i < 8; i++){
+            for(int j = 0; j < 8; j++){
+                //verificar a posição do rei
+                if((tabuleiro.getCasa(i,j) != null) && (tabuleiro.getCasa(i,j).possuiPeca()) && (tabuleiro.getCasa(i,j).getTipoPeca() == 11)){
+                   // verificar se o rei esta ameaçado pelo peao adversario
+                   if((tabuleiro.getCasa(i+1,j+1) != null) && (tabuleiro.getCasa(i+1, j+1).possuiPeca()) 
+                   && (tabuleiro.getCasa(i+1, j+1).getTipoPeca() == 2)){
+                       return true;
+                   }
+                   if((tabuleiro.getCasa(i-1,j+1) != null) && (tabuleiro.getCasa(i-1, j+1).possuiPeca()) 
+                   && (tabuleiro.getCasa(i-1, j+1).getTipoPeca() == 2)){
+                       return true;
+                   }
+                   
+                   //verificar se o rei esta sendo ameaçado pelo rei adversario
+                   if(tabuleiro.getCasa(i+1, j) != null && (tabuleiro.getCasa(i+1, j).possuiPeca()) && 
+                   (tabuleiro.getCasa(i+1, j)).getTipoPeca() == 10) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i-1, j) != null && (tabuleiro.getCasa(i-1, j).possuiPeca()) && 
+                   (tabuleiro.getCasa(i-1, j)).getTipoPeca() == 10) {
+                        return true;
+                    }
+                   if(tabuleiro.getCasa(i, j+1) != null && (tabuleiro.getCasa(i, j+1).possuiPeca()) && 
+                    (tabuleiro.getCasa(i, j+1)).getTipoPeca() == 10) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i, j-1) != null && (tabuleiro.getCasa(i, j-1).possuiPeca()) &&
+                    (tabuleiro.getCasa(i, j-1)).getTipoPeca() == 10) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i+1, i+1) != null && (tabuleiro.getCasa(j+1, i+1).possuiPeca()) &&
+                    (tabuleiro.getCasa(j+1, i+1)).getTipoPeca() == 10) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i+1, j-1) != null && (tabuleiro.getCasa(i+1, j-1).possuiPeca()) && 
+                    (tabuleiro.getCasa(i+1, j-1)).getTipoPeca() == 10) {
+                        return true;
+                   }
+                   if(tabuleiro.getCasa(i-1, j+1) != null && (tabuleiro.getCasa(i-1, j+1).possuiPeca()) &&
+                   (tabuleiro.getCasa(i-1, j+1)).getTipoPeca() == 10) {
+                        return true;
+                   }        
+                   if(tabuleiro.getCasa(i-1, j-1) != null && (tabuleiro.getCasa(i-1, j-1).possuiPeca()) &&  
+                   (tabuleiro.getCasa(i-1, j-1)).getTipoPeca() == 10) {
+                        return true;
+                   }
+                                      
+                   //verificar se o rei esta sendo ameaçado pelo cavalo do adversario
+                   if (tabuleiro.getCasa(i+2, j+1) != null && (tabuleiro.getCasa(i+2, j+1).possuiPeca()) &&
+                      (tabuleiro.getCasa(i+2, j+1)).getTipoPeca() == 4) {
+                        return true;
+                    }
+                   if (tabuleiro.getCasa(i+2, j-1) != null && (tabuleiro.getCasa(i+2, j-1).possuiPeca()) && 
+                      (tabuleiro.getCasa(i+2, j-1)).getTipoPeca() == 4) {
+                        return true;
+                   }
+                   if (tabuleiro.getCasa(i-2, j+1) != null && (tabuleiro.getCasa(i-2, j+1).possuiPeca()) && 
+                      (tabuleiro.getCasa(i-2, j+1)).getTipoPeca() == 4) {
+                       return true;
+                   }
+                   if (tabuleiro.getCasa(i-2, j-1) != null && (tabuleiro.getCasa(i-2, j-1).possuiPeca()) && 
+                      (tabuleiro.getCasa(i-2, j-1)).getTipoPeca() == 4) {
+                        return true;
+                   }
+                   if (tabuleiro.getCasa(i+1, j+2) != null && (tabuleiro.getCasa(i+1, j+2).possuiPeca()) &&
+                       (tabuleiro.getCasa(i+1, j+2)).getTipoPeca() == 4) {
+                        return true;
+                    }
+                   if (tabuleiro.getCasa(i-1, j+2) != null && (tabuleiro.getCasa(i-1, j+2).possuiPeca()) &&
+                       (tabuleiro.getCasa(i-1, j+2)).getTipoPeca() == 4) {
+                        return true;
+                   }
+                   if (tabuleiro.getCasa(i+1, j-2) != null && (tabuleiro.getCasa(i+1, j-2).possuiPeca()) &&
+                      (tabuleiro.getCasa(i+1, j-2)).getTipoPeca() == 4) {
+                        return true;
+                   }
+                   if (tabuleiro.getCasa(i-1, j-2) != null && (tabuleiro.getCasa(i-1, j-2).possuiPeca()) &&
+                       (tabuleiro.getCasa(i-1, j-2)).getTipoPeca() == 4) {
+                        return true;
+                    
+                   }
+                   
+                   
+                   //verificar se o rei esta sendo ameaçado pela rainha adversaria                   
+                   
+                   
+                   break;
+                   
+                   
+                }
+                               
+                break;
+            }
+           
+        }
+        return false;
+    }
+    
+    public boolean xequeMate(Casa destino){
+        if( tipo%2 == 0 && podeMover(destino) == false && xequeBranco() == true){
+             JOptionPane.showMessageDialog(null, " Xeque");
+               return true;
+        }
+        else if (tipo%2 != 0 && podeMover(destino) == false && xequePreto() == true){
+               JOptionPane.showMessageDialog(null, " Xeque");
+               return true;
+        }
+        
+        return false;
+    }
+    
     /**
      * Valor    Tipo
      *   0   Branca (Peao)

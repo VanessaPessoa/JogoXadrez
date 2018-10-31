@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=Movimentacao
+comment0.text=\r\n\ Classe\ abstrata\ Movimentacao\ -\ escreva\ a\ descri\u00E7\u00E3o\ da\ classe\ aqui\r\n\ \r\n\ @author\ (seu\ nome\ aqui)\r\n\ @version\ (vers\u00E3o\ ou\ data)\r\n
+comment1.params=x\ y
+comment1.target=void\ movimentos(int,\ int)
+numComments=2

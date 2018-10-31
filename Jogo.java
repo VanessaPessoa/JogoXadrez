@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Armazena o tabuleiro e responsavel por posicionar as pecas.
  * 
@@ -11,7 +11,7 @@ public class Jogo {
     private int turno; // 0 representa brancas e 1 representa pretas
 
     public Jogo() {
-        tabuleiro = new Tabuleiro();
+        tabuleiro= new Tabuleiro();
         turno = 0;
         criarPecas();
     }
@@ -42,68 +42,69 @@ public class Jogo {
      * Utilizado na inicializa�ao do jogo.
      */
     protected void criarPecas() {
-        for(int linha=0; linha<8; linha++){
-           //posicionar os peões brancos
-           Peca peaoBranco = new Peao(tabuleiro.getCasa(linha,1), Peca.PEAO_BRANCO);
-           //posicionar os peões pretos
-           Peca peaoPreto = new Peao(tabuleiro.getCasa(linha,6), Peca.PEAO_PRETO);
+        for(int x=0; x<8; x++){
+           //posicionar os peões 
+           Peca peaoBranco = new Peao(tabuleiro.getCasa(x,1), Peca.PEAO_BRANCO, tabuleiro);
+           Peca peaoPreto = new Peao(tabuleiro.getCasa(x,6), Peca.PEAO_PRETO, tabuleiro);
         }
-        
-        //posicionar as torres brancas
-        Peca torreBranca = new Torre(tabuleiro.getCasa(0,0),Peca.TORRE_BRANCA);
-        Peca torreBranca1 = new Torre(tabuleiro.getCasa(7,0),Peca.TORRE_BRANCA);
-                
-        //posicionar as torres pretas
-        Peca torrePreta= new Torre(tabuleiro.getCasa(0,7),Peca.TORRE_PRETA);
-        Peca torrePreta1= new Torre(tabuleiro.getCasa(7,7),Peca.TORRE_PRETA);
-        
-        //posicionar os bispos brancos
-        Peca bispoBranco= new Bispo(tabuleiro.getCasa(2,0),Peca.BISPO_BRANCO);        
-        Peca bispoBranco1= new Bispo(tabuleiro.getCasa(5,0),Peca.BISPO_BRANCO);
-                
-        //posicionar os bispos pretos
-        Peca bispoPreto= new Bispo(tabuleiro.getCasa(2,7),Peca.BISPO_PRETO);
-        Peca bispoPreto1= new Bispo(tabuleiro.getCasa(5,7),Peca.BISPO_PRETO);
-        
-        //posicionar os cavalos brancos
-        Peca cavaloBranco= new Cavalo(tabuleiro.getCasa(1,0),Peca.CAVALO_BRANCO);
-        Peca cavaloBranco1= new Cavalo(tabuleiro.getCasa(6,0),Peca.CAVALO_BRANCO);
-                
-        //posicionar os cavalos pretos
-        Peca cavaloPreto= new Cavalo(tabuleiro.getCasa(1,7),Peca.CAVALO_PRETO);
-        Peca cavaloPreto1= new Cavalo(tabuleiro.getCasa(6,7),Peca.CAVALO_PRETO);
-        
+        for(int x=0; x<8; x = x + 7){
+            //posicionar as torres
+            Peca torreBranca = new Torre(tabuleiro.getCasa(x,0),Peca.TORRE_BRANCA, tabuleiro);    
+            Peca torrePreta= new Torre(tabuleiro.getCasa(x,7),Peca.TORRE_PRETA, tabuleiro);
+        }
+        for(int x=2; x<6; x = x + 3){
+            //posicionar os bispos
+            Peca bispoBranco= new Bispo(tabuleiro.getCasa(x,0),Peca.BISPO_BRANCO, tabuleiro); 
+            Peca bispoPreto= new Bispo(tabuleiro.getCasa(x,7),Peca.BISPO_PRETO, tabuleiro);
+        }        
+        for(int x=1; x<7; x = x + 5){
+            //posicionar os cavalos
+            Peca cavaloBranco= new Cavalo(tabuleiro.getCasa(x,0),Peca.CAVALO_BRANCO, tabuleiro); 
+            Peca cavaloPreto= new Cavalo(tabuleiro.getCasa(x,7),Peca.CAVALO_PRETO, tabuleiro);
+        }
+              
         //posicionar a rainha branca
-        Peca rainhaBranca= new Rainha(tabuleiro.getCasa(3,0),Peca.RAINHA_BRANCA);
+        Peca rainhaBranca= new Rainha(tabuleiro.getCasa(3,0),Peca.RAINHA_BRANCA, tabuleiro);
               
         //posicionar a rainha preta
-        Peca rainhaPreta= new Rainha(tabuleiro.getCasa(3,7),Peca.RAINHA_PRETA);
+        Peca rainhaPreta= new Rainha(tabuleiro.getCasa(3,7),Peca.RAINHA_PRETA, tabuleiro);
         
         //posicionar o rei branco
-        Peca reiBranco= new Rei(tabuleiro.getCasa(4,0),Peca.REI_BRANCO);
+        Peca reiBranco= new Rei(tabuleiro.getCasa(4,0),Peca.REI_BRANCO, tabuleiro);
         
         //posicionar o rei preto
-        Peca reiPreto= new Rei(tabuleiro.getCasa(4,7),Peca.REI_PRETO);
+        Peca reiPreto= new Rei(tabuleiro.getCasa(4,7),Peca.REI_PRETO, tabuleiro);
     }    
     
     /**
-     * Comanda uma Pe�a na posicao (origemX, origemY) fazer um movimento 
-     * para (destinoX, destinoY).
      * 
      * @param origemX linha da Casa de origem.
      * @param origemY coluna da Casa de origem.
      * @param destinoX linha da Casa de destino.
      * @param destinoY coluna da Casa de destino.
      */
-    public void moverPeca(int origemX, int origemY, int destinoX, int destinoY) {
+    public void moverPeca(CasaGUI casaOrigem, CasaGUI casaDestino) {
         //onde ocorrera as movimentações das peças
-        Casa origem = tabuleiro.getCasa(origemX, origemY);
-        Casa destino = tabuleiro.getCasa(destinoX, destinoY);
-        Peca peca= origem.getPeca();
+        Casa origem = tabuleiro.getCasa(casaOrigem.getPosicaoX(),casaOrigem.getPosicaoY());
+        Casa destino = tabuleiro.getCasa(casaDestino.getPosicaoX(), casaDestino.getPosicaoY());
+        Peca peca = origem.getPeca();
         peca.mover(destino);
-                       
+        // se destino possui uma peça é porque a peça se moveu, então pode mudar de turno 
+        
+        if (destino.getPeca() != null && destino.getPeca().equals(peca)) {
+            mudarTurno();  
+        } 
+       
     }   
    
+    public ArrayList<Casa> movimentosPossiveis(CasaGUI casa) {
+        int x = casa.getPosicaoX();
+        int y = casa.getPosicaoY();
+        Peca peca = tabuleiro.getCasa(x, y).getPeca();
+        peca.movimentos(x, y);
+        return peca.getCasasPossiveis();
+    }
+    
     /**
      * @return o Tabuleiro em jogo.
      */
