@@ -8,7 +8,4 @@ comment2.params=x\ y
 comment2.target=void\ movimentos(int,\ int)
 comment3.params=destino
 comment3.target=void\ mover(Casa)
-comment3.text=\r\n\ \ \ \ public\ boolean\ roque(Casa\ destino){\r\n\ \ \ \ \ \ \ \ if(tipoRoque\ \=\=\ 1){\r\n\ \ \ \ \ \ \ \ \ \ \ \ destino\ \=\ tabuleiro.getCasa(5,0);\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ else\ if(tipoRoque\ \=\=\ 2){\r\n\ \ \ \ \ \ \ \ \ \ \ \ destino\ \=\ tabuleiro.getCasa(5,7);\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ else\ if(tipoRoque\ \=\=\ 3){\r\n\ \ \ \ \ \ \ \ \ \ \ \ destino\ \=\ tabuleiro.getCasa(3,0);\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ else\ if(tipoRoque\ \=\=\ 4){\r\n\ \ \ \ \ \ \ \ \ \ \ \ destino\ \=\ tabuleiro.getCasa(3,7);\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ true;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ return\ false;\r\n\ \ \ \ }\ \ \ \ \r\n\ \ \ \ \r\n
-comment4.params=
-comment4.target=boolean\ primeiraJogadaTorre()
-numComments=5
+numComments=4

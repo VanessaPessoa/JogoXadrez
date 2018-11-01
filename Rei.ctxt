@@ -11,6 +11,4 @@ comment4.params=
 comment4.target=boolean\ primeiraJogadaRei()
 comment5.params=destino
 comment5.target=boolean\ roque(Casa)
-comment6.params=
-comment6.target=void\ proximoMovimento()
-numComments=7
+numComments=6

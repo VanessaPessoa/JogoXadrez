@@ -6,17 +6,18 @@ import java.util.ArrayList;
  * @version (a version number or a date)
  */
 public class Torre extends Peca{
-    private boolean primeiraJogadaTorre;
     
+    private boolean primeiraJogada;
     /**
      * Constructor for objects of class Torre
      */
     public Torre(Casa casa, int tipo, Tabuleiro tabuleiro)
     {
        super(casa, tipo, tabuleiro);
-       primeiraJogadaTorre = true;
+       primeiraJogada = true;
     }
-        
+    
+    
     public void movimentos(int x, int y) {
         // vasculhar as casas a esquerda
         for (int i = x-1; i >= 0; i--) {
@@ -71,43 +72,11 @@ public class Torre extends Peca{
             }
         }
     }
-    
-    /*
-    public boolean roque(Casa destino){
-        if(tipoRoque == 1){
-            destino = tabuleiro.getCasa(5,0);
-            return true;
-        }
-        else if(tipoRoque == 2){
-            destino = tabuleiro.getCasa(5,7);
-            return true;
-        }
-        else if(tipoRoque == 3){
-            destino = tabuleiro.getCasa(3,0);
-            return true;
-        }
-        else if(tipoRoque == 4){
-            destino = tabuleiro.getCasa(3,7);
-            return true;
-        }
-        return false;
-    }    
-    
-    */
-   
+        
     public void mover(Casa destino){      
         if (podeMover(destino)) {
-            primeiraJogadaTorre = false;
-        }
-        if(roque(destino) == true){
-            roque(destino);
-            casa = destino;
+            setPrimeiraJogadaTorre(false);
         }
         super.mover(destino);
-        super.mover(destino);
-    }
-    
-    public boolean primeiraJogadaTorre(){
-       return primeiraJogadaTorre;
-    }      
+    }    
 }

@@ -9,11 +9,12 @@ public class Jogo {
 
     private Tabuleiro tabuleiro;
     private int turno; // 0 representa brancas e 1 representa pretas
-
+    private int contador;
     public Jogo() {
         tabuleiro= new Tabuleiro();
         turno = 0;
-        criarPecas();
+        criarPecas(); 
+        contador = 0;
     }
     
     public int turno() {
@@ -32,7 +33,7 @@ public class Jogo {
             turno--;
         }
     }
-    
+   
     public void vezInicial() {
         turno = 0; // brancas
     }
@@ -91,12 +92,18 @@ public class Jogo {
         peca.mover(destino);
         // se destino possui uma peça é porque a peça se moveu, então pode mudar de turno 
         
-        if (destino.getPeca() != null && destino.getPeca().equals(peca)) {
-            mudarTurno();  
-        } 
-       
+        if (destino.getPeca() != null  && destino.getPeca().equals(peca) ||
+        ((peca.getTipo() == 0 && destino.getY() == 7) || (peca.getTipo() == 1 && destino.getY() == 0))){
+            mudarTurno(); 
+            contador = contador+1;
+        }
+        
     }   
    
+    public int getContador(){
+        return contador;
+    }
+    
     public ArrayList<Casa> movimentosPossiveis(CasaGUI casa) {
         int x = casa.getPosicaoX();
         int y = casa.getPosicaoY();
@@ -104,6 +111,7 @@ public class Jogo {
         peca.movimentos(x, y);
         return peca.getCasasPossiveis();
     }
+       
     
     /**
      * @return o Tabuleiro em jogo.

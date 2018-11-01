@@ -11,7 +11,7 @@ public class Casa {
     private int x;
     private int y;
     private Peca peca;
-
+    
     public Casa(int x, int y) {
         this.x = x;
         this.y = y;

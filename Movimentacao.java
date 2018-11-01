@@ -12,8 +12,6 @@ public abstract class Movimentacao
     
     abstract public void movimentos(int x, int y);
     
-    
-    
     /*public void destacarCasas(ArrayList<Casa> casas) {
         for (Casa casa: casas) {
             int x = casa.getX();

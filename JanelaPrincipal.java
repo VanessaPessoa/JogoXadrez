@@ -23,7 +23,6 @@ public class JanelaPrincipal extends JFrame {
      * @param casaClicada Casa que o jogador clicou.
      */
     public void reagir(CasaGUI casaClicada) {
-              
         if (primeiroClique) {
             if (casaClicada.possuiPeca()) {
                 if(jogo.suaVez(casaClicada.getTipoPeca())) {
